@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduQuiz Pro - Ultimate System Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050b18;
+            --surface: rgba(16, 25, 45, 0.8);
+            --border: rgba(0, 255, 255, 0.2);
+            --cyan: #00f2ff;
+            --purple: #bc13fe;
+            --green: #39ff14;
+            --red: #ff3131;
+            --text: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header { text-align: center; margin-bottom: 60px; }
+        .header h1 { 
+            font-size: 3rem; margin: 0; letter-spacing: 5px; 
+            background: linear-gradient(to right, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0,242,255,0.3));
+        }
+
+        /* Flow Grid System */
+        .flow-wrapper {
+            display: grid;
+            grid-template-columns: 250px 350px 250px;
+            gap: 20px;
+            align-items: start;
+            max-width: 1000px;
+        }
+
+        /* Component Styles */
+        .node {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .node:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .content { font-size: 14px; font-weight: 400; }
+
+        .method {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: block;
+            margin-top: 10px;
+            color: #94a3b8;
+            border-left: 2px solid var(--purple);
+        }
+
+        /* Logic Badges */
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge.cyan { background: var(--cyan); color: #000; }
+        .badge.red { background: var(--red); color: #fff; }
+        .badge.green { background: var(--green); color: #000; }
+
+        /* Connections */
+        .line-v {
+            width: 2px;
+            height: 40px;
+            background: var(--border);
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .line-v::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, var(--cyan), transparent);
+            animation: flow 2s infinite linear;
+        }
+
+        .branch-left { border-left: 2px solid var(--border); border-top: 2px solid var(--border); height: 40px; width: 50%; margin-left: 50%; border-radius: 10px 0 0 0; }
+        .branch-right { border-right: 2px solid var(--border); border-top: 2px solid var(--border); height: 40px; width: 50%; border-radius: 0 10px 0 0; }
+
+        @keyframes flow {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        /* Specialized Nodes */
+        .gate {
+            width: 120px;
+            height: 120px;
+            background: var(--surface);
+            border: 2px solid var(--purple);
+            transform: rotate(45deg);
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .gate span { transform: rotate(-45deg); font-size: 12px; font-weight: 600; }
+
+        .start-node { border: 2px solid var(--cyan); border-radius: 50px; text-align: center; font-weight: 700; text-transform: uppercase; }
+
+        /* Sections */
+        .center-col { grid-column: 2; }
+        .left-col { grid-column: 1; padding-top: 150px; }
+        .right-col { grid-column: 3; padding-top: 500px; }
+
+        .warning-node { border-color: var(--red) !important; animation: pulse-red 2s infinite; }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 49, 49, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 49, 49, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 49, 49, 0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>EDUQUIZ PRO</h1>
+        <p style="color: var(--cyan); letter-spacing: 2px;">SYSTEM ARCHITECTURE MAP</p>
+    </div>
+
+    <div class="flow-wrapper">
+        
+        <!-- COLUMN 1: SIDE ACTIONS -->
+        <div class="left-col">
+            <div class="node">
+                <span class="badge red">Invalid</span>
+                <span class="title">Error Handling</span>
+                <div class="content">Show "Invalid User" Message</div>
+                <div class="method">lblMsg.setText()</div>
+            </div>
+            
+            <div style="height: 380px;"></div>
+
+            <div class="node">
+                <span class="badge cyan">Settings</span>
+                <span class="title">Profile Update</span>
+                <div class="content">Update Username/Password</div>
+                <div class="method">UserManager.updateUser()</div>
+            </div>
+        </div>
+
+        <!-- COLUMN 2: PRIMARY FLOW -->
+        <div class="center-col">
+            <div class="node start-node">APP_START()</div>
+            <div class="line-v"></div>
+
+            <div class="node">
+                <span class="title">Authentication</span>
+                <div class="content">LoginPage Interface</div>
+                <div class="method">UserManager.validate()</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="gate">
+                <span>Success?</span>
+            </div>
+
+            <div class="line-v" style="height: 20px;"></div>
+
+            <div class="node">
+                <span class="title">Core Navigation</span>
+                <div class="content">Dashboard Display</div>
+                <div class="method">CardLayout.show("HOME")</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="node">
+                <span class="title">Quiz Engine</span>
+                <div class="content">Load Questions & Shuffle</div>
+                <div class="method">loadQuestionsForSubject()</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="node" style="border-width: 2px;">
+                <span class="badge green">Active Session</span>
+                <span class="title">User Interaction</span>
+                <div class="content">Navigate Question Palette</div>
+                <div class="method">userAnswers[currentIdx]</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="node">
+                <span class="title">Data Persistence</span>
+                <div class="content">Calculate Accuracy & XP</div>
+                <div class="method">parentDashboard.addResult()</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="node start-node" style="border-color: var(--green);">EXIT_SUCCESS</div>
+        </div>
+
+        <!-- COLUMN 3: BACKGROUND PROCESSES -->
+        <div class="right-col">
+            <div class="node warning-node">
+                <span class="badge red">Interrupt</span>
+                <span class="title">Time Manager</span>
+                <div class="content">5 Minute Warning Dialog</div>
+                <div class="method">javax.swing.Timer</div>
+            </div>
+
+            <div class="line-v"></div>
+
+            <div class="node">
+                <span class="title">Dynamic UI</span>
+                <div class="content">Update Palette Colors</div>
+                <div class="method">updatePaletteUI()</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 80px; font-size: 12px; color: #475569; font-family: 'JetBrains Mono';">
+        &lt; System developed with Java Swing & AWT Graphics2D /&gt;
+    </div>
+
+</body>
+</html>
